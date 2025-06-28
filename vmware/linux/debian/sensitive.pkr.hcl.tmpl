@@ -1,0 +1,29 @@
+variable "default_user" {
+  sensitive = true
+  type      = string
+  default   = ""
+}
+
+variable "root_password" {
+  sensitive = true
+  type      = string
+  default   = ""
+}
+
+variable "ssh_password" {
+  sensitive = true
+  type      = string
+  default   = ""
+}
+
+variable "ca_certificate" {
+  sensitive = true
+  type      = string
+  default   = ""
+}
+
+variable "ssh_pubkey" {
+  sensitive = true
+  type      = string
+  default   = ""
+}
