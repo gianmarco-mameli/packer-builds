@@ -105,7 +105,7 @@ locals {
       architecture  = "arm64"
       distribution  = "bookworm"
       guest_os_type = "arm-debian12-64"
-      version = "12.11.0"
+      version       = "12.11.0"
       disk_variants = {
         // lvm = "lvm"
         plain = "regular"

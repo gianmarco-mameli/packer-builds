@@ -36,7 +36,7 @@ build {
       iso_url          = source.value.iso_url
       name             = source.value.name
       output_directory = "/Users/gnammyx/VM/${source.value.name}"
-      vm_name = source.value.name
+      vm_name          = source.value.name
       http_content = {
         "/preseed.cfg" = templatefile("${path.root}/http/${source.value.distribution}/preseed.cfg",
           {
