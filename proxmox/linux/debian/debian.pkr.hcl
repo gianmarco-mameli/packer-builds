@@ -2,10 +2,15 @@
 source "proxmox-iso" "debian" {
   communicator = var.communicator
   cores        = var.cores
+  cpu_type     = var.cpu_type
   disks {
     type         = "scsi"
     disk_size    = var.disk_size
     storage_pool = "local-lvm"
+    io_thread    = true
+    ssd          = true
+    discard      = true
+    format       = var.disk_type
   }
   efi_config {
     efi_storage_pool  = "local-lvm"
@@ -13,17 +18,19 @@ source "proxmox-iso" "debian" {
     pre_enrolled_keys = true
   }
   network_adapters {
-    model  = "virtio"
-    bridge = "vmbr0"
+    model       = "virtio"
+    bridge      = "vmbr0"
+    mac_address = "aa:bb:cc:dd:ee:ff"
   }
 
   bios = "ovmf"
   # disable_kvm = true
-  memory = var.memory
-  # machine = "virt"
-  scsi_controller = "virtio-scsi-pci"
+  memory          = var.memory
+  machine         = "q35"
+  scsi_controller = "virtio-scsi-single"
+
   # cloud_init_disk_type = "scsi"
-  shutdown_command = "echo '${var.ssh_password}' | sudo -E -S poweroff"
+  # shutdown_command = "echo '${var.ssh_password}' | sudo -E -S poweroff"
   # skip_compaction          = true
   ssh_password             = var.ssh_password
   ssh_timeout              = var.ssh_timeout
@@ -57,6 +64,7 @@ build {
       os      = source.value.os
       name    = source.value.name
       vm_name = source.value.name
+      vm_id   = source.value.vm_id
       http_content = {
         "/preseed.cfg" = templatefile("${path.root}/http/${source.value.distribution}/preseed.cfg",
           {
@@ -126,7 +134,6 @@ build {
     inline = [
       "cloud-init status --wait",
       "cloud-init clean --seed --machine-id --logs",
-      "cloud-init clean",
       ":> /root/.bash_history",
       "apt-get -y autoremove --purge",
       "apt-get autoclean",

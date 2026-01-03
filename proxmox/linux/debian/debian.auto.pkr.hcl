@@ -1,10 +1,10 @@
 variables {
   apt_cache_url    = ""
-  box_output_dir   = "/Users/gnammyx/Parallels"
   country          = "IT"
   cores            = 1
+  cpu_type         = "host"
   disk_size        = "20G"
-  disk_type        = "expand"
+  disk_type        = "raw"
   domain           = ""
   keyboard         = "us"
   language         = "en"
@@ -17,6 +17,8 @@ variables {
   communicator     = "ssh"
   ssh_timeout      = "60m"
   iso_storage_pool = "local"
+  vm_disk_use_swap = false
+  vm_disk_device   = "sda"
   vm_disk_partitions = [
     {
       name = "efi"
@@ -79,11 +81,11 @@ variable "vm_disk_lvm" {
 locals {
   debian = {
     bookworm = {
-      architecture           = "arm64"
-      distribution           = "bookworm"
-      os                     = "l26"
-      parallels_tools_flavor = "lin-arm"
-      version                = "12.11.0"
+      vm_id        = 9991
+      architecture = "amd64"
+      distribution = "bookworm"
+      os           = "l26"
+      version      = "13.2.0"
       disk_variants = {
         // lvm = "lvm"
         plain = "regular"
@@ -97,10 +99,13 @@ locals {
         name         = replace("${key}-${value.architecture}-${d_key}-${value.version}", ".", "-")
         distribution = key
         disk_type    = d_value
-        iso_url      = "https://cdimage.debian.org/cdimage/release/${value.version}/arm64/iso-cd/debian-${value.version}-${value.architecture}-netinst.iso"
+        # iso_url      = "https://cdimage.debian.org/cdimage/release/${value.version}/${value.architecture}/iso-cd/debian-${value.version}-${value.architecture}-netinst.iso"
+        # iso_checksum = "file:https://cdimage.debian.org/cdimage/release/${value.version}/${value.architecture}/iso-cd/SHA512SUMS"
+        iso_url      = "https://cdimage.debian.org/cdimage/release/${value.version}/${value.architecture}/iso-cd/debian-${value.version}-${value.architecture}-netinst.iso"
         iso_checksum = "file:https://cdimage.debian.org/cdimage/release/${value.version}/${value.architecture}/iso-cd/SHA512SUMS"
         version      = value.version
         os           = value.os
+        vm_id        = value.vm_id
       }
     ]
   ])
