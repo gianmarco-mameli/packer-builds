@@ -3,7 +3,7 @@ variables {
   country          = "IT"
   cores            = 1
   cpu_type         = "host"
-  disk_size        = "20G"
+  disk_size        = "40G"
   disk_type        = "raw"
   domain           = ""
   keyboard         = "us"
@@ -85,7 +85,7 @@ locals {
       architecture = "amd64"
       distribution = "bookworm"
       os           = "l26"
-      version      = "13.2.0"
+      version      = "13.3.0"
       disk_variants = {
         // lvm = "lvm"
         plain = "regular"
