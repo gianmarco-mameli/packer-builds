@@ -85,7 +85,7 @@ locals {
       architecture = "amd64"
       distribution = "bookworm"
       os           = "l26"
-      version      = "13.3.0"
+      version      = "13.4.0"
       disk_variants = {
         // lvm = "lvm"
         plain = "regular"
