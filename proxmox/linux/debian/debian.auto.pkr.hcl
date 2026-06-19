@@ -80,12 +80,12 @@ variable "vm_disk_lvm" {
 
 locals {
   debian = {
-    bookworm = {
+    trixie = {
       vm_id        = 9991
       architecture = "amd64"
-      distribution = "bookworm"
+      distribution = "trixie"
       os           = "l26"
-      version      = "13.4.0"
+      version      = "13.5.0"
       disk_variants = {
         // lvm = "lvm"
         plain = "regular"
