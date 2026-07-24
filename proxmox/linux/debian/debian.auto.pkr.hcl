@@ -85,7 +85,7 @@ locals {
       architecture = "amd64"
       distribution = "trixie"
       os           = "l26"
-      version      = "13.5.0"
+      version      = "13.6.0"
       disk_variants = {
         // lvm = "lvm"
         plain = "regular"
